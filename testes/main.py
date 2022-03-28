@@ -63,6 +63,7 @@ def main():
     tabuleiro = cria_mapa(configDict["maxLin"], configDict["maxCol"])
 
     instancia = mapa(configDict["maxLin"], configDict["maxCol"], tabuleiro)
+    # Aqui vai para o loop principial, qualquer comando tem que ser executado antes desse
     instancia.run()
 
     #instancia.pintar_quadrado(8, 8, 'A')
