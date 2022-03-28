@@ -186,12 +186,11 @@ class AgentRnd:
         print("Ag deliberou pela acao: ", result[0], " o estado resultado esperado é: ", result[1])
 
         ## Executa esse acao, atraves do metodo executeGo 
-        #resultMov = 
-        self.executeGo(result[0])
+        resultMov = self.executeGo(result[0])
         #eu
-        #if resultMov == 1 and agent.tl > -700:
-        #    pilha.push(agent.previousAction) #duvida se deixa aq, pq la no agentRnd quando esgotava o tempo ele criava um loop pq aqui tirava e lá ele colocava de novo oq tinha sido tirado
-        #    pilha.show()
+        if resultMov == 1 and agent.tl > 7:
+            pilha.push(agent.previousAction) #duvida se deixa aq, pq la no agentRnd quando esgotava o tempo ele criava um loop pq aqui tirava e lá ele colocava de novo oq tinha sido tirado
+            pilha.show()
         self.previousAction = result[0]
         self.expectedState = result[1]    
 
