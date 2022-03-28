@@ -95,34 +95,39 @@ class RandomPlan:
         localVitima = AgentRnd.victimPresenceSensor
         #if localVitima == estadoAtual: AttributeError: 'function' object has no attribute 'row'
         #    return False
-        if str(estadoAtual) not in AgentRnd.naoTestados:
-            AgentRnd.naoTestados[str(estadoAtual)] = Stack() 
-            AgentRnd.naoTestados[str(estadoAtual)].push("NE")
-            AgentRnd.naoTestados[str(estadoAtual)].push("SO")
-            AgentRnd.naoTestados[str(estadoAtual)].push("NO")
-            AgentRnd.naoTestados[str(estadoAtual)].push("SE")
-            AgentRnd.naoTestados[str(estadoAtual)].push("O")
-            AgentRnd.naoTestados[str(estadoAtual)].push("N")
-            AgentRnd.naoTestados[str(estadoAtual)].push("L")
-            AgentRnd.naoTestados[str(estadoAtual)].push("S")
+        if str(estadoAtual) not in AgentRnd.untried:
+            AgentRnd.untried[str(estadoAtual)] = Stack() 
+            AgentRnd.untried[str(estadoAtual)].push("NE")
+            AgentRnd.untried[str(estadoAtual)].push("SO")
+            AgentRnd.untried[str(estadoAtual)].push("NO")
+            AgentRnd.untried[str(estadoAtual)].push("SE")
+            AgentRnd.untried[str(estadoAtual)].push("O")
+            AgentRnd.untried[str(estadoAtual)].push("N")
+            AgentRnd.untried[str(estadoAtual)].push("L")
+            AgentRnd.untried[str(estadoAtual)].push("S")
 
         if AgentRnd.previousState is not NULL: 
-            AgentRnd.resultadosCol[str(AgentRnd.previousAction)] = estadoAtual 
-            AgentRnd.resultados[str(AgentRnd.previousState)] = AgentRnd.resultadosCol[AgentRnd.previousAction]
+            AgentRnd.resultsCol[str(AgentRnd.previousAction)] = estadoAtual 
+            AgentRnd.results[str(AgentRnd.previousState)] = AgentRnd.resultsCol[AgentRnd.previousAction]
          
-            AgentRnd.camNaoTestados[str(AgentRnd.previousState)] = Stack()
-            AgentRnd.camNaoTestados[str(AgentRnd.previousState)].push(AgentRnd.previousAction)
+            AgentRnd.unbacktracked[str(AgentRnd.previousState)] = Stack()
+            AgentRnd.unbacktracked[str(AgentRnd.previousState)].push(AgentRnd.previousAction)
 
-        if AgentRnd.naoTestados[str(estadoAtual)].isEmpty():
-            if AgentRnd.camNaoTestados[str(estadoAtual)].isEmpty():
+        if AgentRnd.untried[str(estadoAtual)].isEmpty():
+            if AgentRnd.unbacktracked[str(estadoAtual)].isEmpty():
                 return False
             else: #n tenho certeza se aqui ta certo
-                acaoB = AgentRnd.camNaoTestados[str(estadoAtual)].pop()
+                print("Unbacktracked:")
+                AgentRnd.unbacktracked[str(estadoAtual)].show()
+                acaoB = AgentRnd.unbacktracked[str(estadoAtual)].pop()
                 AgentRnd.previousAction = acaoB
-                AgentRnd.resultadosCol[acaoB] = acaoB
-                AgentRnd.resultados[str(estadoAtual)] = AgentRnd.resultadosCol[acaoB]
+                AgentRnd.resultsCol[acaoB] = acaoB
+                AgentRnd.results[str(estadoAtual)] = AgentRnd.resultsCol[acaoB]
         else:
-            AgentRnd.previousAction = AgentRnd.naoTestados[str(estadoAtual)].pop()  
+            print("Acoes Restantes:")
+            AgentRnd.untried[str(estadoAtual)].show() 
+            AgentRnd.previousAction = AgentRnd.untried[str(estadoAtual)].pop()  
+            AgentRnd.untried[str(estadoAtual)].show() 
         AgentRnd.previousState = estadoAtual
         return AgentRnd.previousAction
         
