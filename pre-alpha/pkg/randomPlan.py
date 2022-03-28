@@ -93,67 +93,39 @@ class RandomPlan:
 
     def OnlineDFSAgent(self, estadoAtual, AgentRnd, pilha):
         localVitima = AgentRnd.victimPresenceSensor
-        #print("Local Vitima: ", localVitima)
         #if localVitima == estadoAtual: AttributeError: 'function' object has no attribute 'row'
         #    return False
-        if AgentRnd.tl >= 7:
-            if str(estadoAtual) not in AgentRnd.naoTestados:
-                #AgentRnd.acoes[estadoAtual] = action
-                #AgentRnd.naoTestados[str(estadoAtual)] = action nao faz sentido pq ele é uma pilha e aq eh soh um dicionario armazando um vetor de acoes
-                AgentRnd.naoTestados[str(estadoAtual)] = Stack() 
-                AgentRnd.naoTestados[str(estadoAtual)].push("N")
-                AgentRnd.naoTestados[str(estadoAtual)].push("S")
-                AgentRnd.naoTestados[str(estadoAtual)].push("L")
-                AgentRnd.naoTestados[str(estadoAtual)].push("O")
-                AgentRnd.naoTestados[str(estadoAtual)].push("NO")
-                AgentRnd.naoTestados[str(estadoAtual)].push("NE")
-                AgentRnd.naoTestados[str(estadoAtual)].push("SO")
-                AgentRnd.naoTestados[str(estadoAtual)].push("SE")
-                AgentRnd.naoTestados[str(estadoAtual)].show()
-            if AgentRnd.previousState is not NULL: # and AgentRnd.resultados[str(AgentRnd.previousState)][str(AgentRnd.previousAction)] == NULL: KeyError: '(0, 0)'
-                AgentRnd.resultadosCol[str(AgentRnd.previousAction)] = estadoAtual 
-                AgentRnd.resultados[str(AgentRnd.previousState)] = AgentRnd.resultadosCol[AgentRnd.previousAction]
-                AgentRnd.camNaoTestados[str(estadoAtual)] = Stack()
-                AgentRnd.camNaoTestados[str(estadoAtual)].push(AgentRnd.previousState)
-                print(AgentRnd.resultados[str(AgentRnd.previousState)])
-            if AgentRnd.naoTestados[str(estadoAtual)].isEmpty():
-                if AgentRnd.camNaoTestados[str(estadoAtual)].isEmpty():
-                    return False
-                else: #n tenho certeza se aqui ta certo
-                    acaoB = AgentRnd.camNaoTestados[str(estadoAtual)].pop()
-                    AgentRnd.previousAction = acaoB
-                    AgentRnd.resultadosCol[acaoB] = acaoB
-                    AgentRnd.resultados[str(estadoAtual)] = AgentRnd.resultadosCol[acaoB]
-            else:
-                AgentRnd.previousAction = AgentRnd.naoTestados[str(estadoAtual)].pop()  #pop(naoTestados[estadoAtual])
-            AgentRnd.previousState = estadoAtual
+        if str(estadoAtual) not in AgentRnd.naoTestados:
+            AgentRnd.naoTestados[str(estadoAtual)] = Stack() 
+            AgentRnd.naoTestados[str(estadoAtual)].push("NE")
+            AgentRnd.naoTestados[str(estadoAtual)].push("SO")
+            AgentRnd.naoTestados[str(estadoAtual)].push("NO")
+            AgentRnd.naoTestados[str(estadoAtual)].push("SE")
+            AgentRnd.naoTestados[str(estadoAtual)].push("O")
+            AgentRnd.naoTestados[str(estadoAtual)].push("N")
+            AgentRnd.naoTestados[str(estadoAtual)].push("L")
+            AgentRnd.naoTestados[str(estadoAtual)].push("S")
 
-            pilha.push(AgentRnd.previousAction) #duvida se deixa aq, pq la no agentRnd quando esgotava o tempo ele criava um loop pq aqui tirava e lá ele colocava de novo oq tinha sido tirado
-            pilha.show()
-            return AgentRnd.previousAction
+        if AgentRnd.previousState is not NULL: 
+            AgentRnd.resultadosCol[str(AgentRnd.previousAction)] = estadoAtual 
+            AgentRnd.resultados[str(AgentRnd.previousState)] = AgentRnd.resultadosCol[AgentRnd.previousAction]
+         
+            AgentRnd.camNaoTestados[str(AgentRnd.previousState)] = Stack()
+            AgentRnd.camNaoTestados[str(AgentRnd.previousState)].push(AgentRnd.previousAction)
+
+        if AgentRnd.naoTestados[str(estadoAtual)].isEmpty():
+            if AgentRnd.camNaoTestados[str(estadoAtual)].isEmpty():
+                return False
+            else: #n tenho certeza se aqui ta certo
+                acaoB = AgentRnd.camNaoTestados[str(estadoAtual)].pop()
+                AgentRnd.previousAction = acaoB
+                AgentRnd.resultadosCol[acaoB] = acaoB
+                AgentRnd.resultados[str(estadoAtual)] = AgentRnd.resultadosCol[acaoB]
         else:
-            if pilha.isEmpty() is False:
-                lastStep = pilha.pop()
-                pilha.show()
-                if lastStep == "N":
-                    return "S"
-                elif lastStep == "S":
-                    return "N"
-                elif lastStep == "O":
-                    return "L"
-                elif lastStep == "L":
-                    return "O"
-                elif lastStep =="NE":
-                    return "SO"
-                elif lastStep =="NO":
-                    return "SE"
-                elif lastStep =="SE":
-                    return "NO"
-                elif lastStep =="SO":
-                    return "NE"
-            elif AgentRnd.currentState == AgentRnd.prob.initialState:
-                AgentRnd.tl = 15
-                return AgentRnd.previousAction
+            AgentRnd.previousAction = AgentRnd.naoTestados[str(estadoAtual)].pop()  
+        AgentRnd.previousState = estadoAtual
+        return AgentRnd.previousAction
+        
             
 
     def randomizeNextPosition(self, agent, pilha):
@@ -169,9 +141,35 @@ class RandomPlan:
                     "NO" : (-1, -1),
                     "SE" : (1, 1),
                     "SO" : (1, -1)}
-         resultado = self.OnlineDFSAgent(self.currentState, agent, pilha)
+        
+         if agent.tl > -700:
+            resultado = self.OnlineDFSAgent(self.currentState, agent, pilha)
+         else:
+            if pilha.isEmpty() is False:
+                lastStep = pilha.pop()
+                pilha.show()
+                if lastStep == "N":
+                    resultado = "S"
+                elif lastStep == "S":
+                    resultado = "N"
+                elif lastStep == "O":
+                    resultado = "L"
+                elif lastStep == "L":
+                    resultado = "O"
+                elif lastStep =="NE":
+                    resultado = "SO"
+                elif lastStep =="NO":
+                    resultado = "SE"
+                elif lastStep =="SE":
+                    resultado = "NO"
+                elif lastStep =="SO":
+                    resultado = "NE"
+            elif agent.currentState == agent.prob.initialState:
+                agent.tl = 15
+                resultado = self.OnlineDFSAgent(self.currentState, agent, pilha)
+         
          if resultado == False:
-            return self.currentState 
+            return self.previousAction
          else:
             movDirection = resultado
          state = State(self.currentState.row + movePos[movDirection][0], self.currentState.col + movePos[movDirection][1])
