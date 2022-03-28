@@ -142,7 +142,7 @@ class RandomPlan:
                     "SE" : (1, 1),
                     "SO" : (1, -1)}
         
-         if agent.tl > -700:
+         if agent.tl > 7:
             resultado = self.OnlineDFSAgent(self.currentState, agent, pilha)
          else:
             if pilha.isEmpty() is False:
