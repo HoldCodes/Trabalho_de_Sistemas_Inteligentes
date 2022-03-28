@@ -1,10 +1,12 @@
+import time
+
 import numpy as np
 import tkinter
 from tkinter import *
 
 
 class mapa:
-    def __init__(self, x, y, tabuleiro):
+    def __init__(self, x, y, tabuleiro, cria_robo):
 
         self.limite_x = x
         self.limite_y = y
@@ -19,6 +21,7 @@ class mapa:
         self.x = 0
         self.y = 0
 
+        self.robo = cria_robo
         self.tabuleiro = tabuleiro
 
         #self.container2 = Frame(self.window)
@@ -83,9 +86,10 @@ class mapa:
     def run(self):
         while True:
             try:
-                #a chamada do robo tem que ser executada aqui (onde tbm é atualizado o mapa)
                 self.desenha()
+                self.robo.deliberate()
             except:
                 pass
             self.window.update_idletasks()
             self.window.update()
+            time.sleep(0.2)

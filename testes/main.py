@@ -1,5 +1,6 @@
 import numpy as np
 from pkg.mapa import mapa
+from pkg.robo import Robo
 
 
 def formata(linha):
@@ -55,20 +56,16 @@ def main():
     for line in arq:
         values = line.split("=")
         configDict[values[0]] = int(values[1])
-    #print("dicionario config: ", configDict)
+    print("dicionario config: ", configDict)
 
-    #leitura_arquivo(open("data/ambiente.txt", "r"), ambDict)
-    #print("dicionario config: ", ambDict)
     ## Cria o mapa
     tabuleiro = cria_mapa(configDict["maxLin"], configDict["maxCol"])
+    ## Cria o robo
+    cria_robo = Robo(tabuleiro)
 
-    instancia = mapa(configDict["maxLin"], configDict["maxCol"], tabuleiro)
-    # Aqui vai para o loop principial, qualquer comando tem que ser executado antes desse
+    ## Tudo é passado para o mapa, lá é o mainloop
+    instancia = mapa(configDict["maxLin"], configDict["maxCol"], tabuleiro, cria_robo)
     instancia.run()
-
-    #instancia.pintar_quadrado(8, 8, 'A')
-    #tabuleiro[5][5] = 'A'
-    #print(tabuleiro)
 
 
 if __name__ == '__main__':
