@@ -145,31 +145,6 @@ class AgentRnd:
         self.currentState = self.positionSensor()
 
         #eu
-        """
-        filaAcoes = Queue() #criar um contador e colocar no nome
-        filaAcoes.enqueue("N")
-        filaAcoes.enqueue("S")
-        filaAcoes.enqueue("L")
-        filaAcoes.enqueue("O")
-        filaAcoes.enqueue("NO")
-        filaAcoes.enqueue("NE")
-        filaAcoes.enqueue("SO")
-        filaAcoes.enqueue("SE")
-        
-        pilhaAcoes = Stack()
-        pilhaAcoes.push("N")
-        pilhaAcoes.push("S")
-        pilhaAcoes.push("L")
-        pilhaAcoes.push("O")
-        pilhaAcoes.push("NO")
-        pilhaAcoes.push("NE")
-        pilhaAcoes.push("SO")
-        pilhaAcoes.push("SE")
-
-        self.naoTestados[str(self.currentState)] = pilhaAcoes
-        """
-
-
 
         self.plan.updateCurrentState(self.currentState) # atualiza o current state no plano
         print("Ag cre que esta em: ", self.currentState)
@@ -188,10 +163,11 @@ class AgentRnd:
 
         ## Verifica se atingiu o estado objetivo
         ## Poderia ser outra condição, como atingiu o custo máximo de operação
+        """
         if self.prob.goalTest(self.currentState):
             print("!!! Objetivo atingido !!!")
             del self.libPlan[0]  ## retira plano da biblioteca
-        
+        """
         ## Verifica se tem vitima na posicao atual    
         victimId = self.victimPresenceSensor()
         if victimId > 0:
@@ -210,7 +186,12 @@ class AgentRnd:
         print("Ag deliberou pela acao: ", result[0], " o estado resultado esperado é: ", result[1])
 
         ## Executa esse acao, atraves do metodo executeGo 
+        #resultMov = 
         self.executeGo(result[0])
+        #eu
+        #if resultMov == 1 and agent.tl > -700:
+        #    pilha.push(agent.previousAction) #duvida se deixa aq, pq la no agentRnd quando esgotava o tempo ele criava um loop pq aqui tirava e lá ele colocava de novo oq tinha sido tirado
+        #    pilha.show()
         self.previousAction = result[0]
         self.expectedState = result[1]    
 
@@ -228,7 +209,7 @@ class AgentRnd:
 
         ## Passa a acao para o modelo
         result = self.model.go(action)
-        
+        return result
         ## Se o resultado for True, significa que a acao foi completada com sucesso, e ja pode ser removida do plano
         ## if (result[1]): ## atingiu objetivo ## TACLA 20220311
         ##    del self.plan[0]
