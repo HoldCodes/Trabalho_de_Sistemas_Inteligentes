@@ -67,11 +67,11 @@ class AgentRnd:
         """
 
         #eu
-        self.naoTestados = {}
-        self.resultados = {}
-        self.resultadosCol = {}
-        self.camNaoTestados = {}
-        self.acoes = {}
+        self.untried = {}
+        self.results = {}
+        self.resultsCol = {}
+        self.unbacktracked = {}
+        #self.acoes = {}
 
         self.model = model
 
