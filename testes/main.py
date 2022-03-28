@@ -9,7 +9,6 @@ def formata(linha):
         if c == "," or c == "\n" or c == " ":
             if c != "" and salva.isdigit():
                 formLine.append(salva)
-                print(salva)
                 salva = ""
 
         if c.isdigit():
