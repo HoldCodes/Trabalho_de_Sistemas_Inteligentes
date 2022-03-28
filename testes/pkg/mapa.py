@@ -83,6 +83,7 @@ class mapa:
     def run(self):
         while True:
             try:
+                #a chamada do robo tem que ser executada aqui (onde tbm é atualizado o mapa)
                 self.desenha()
             except:
                 pass
