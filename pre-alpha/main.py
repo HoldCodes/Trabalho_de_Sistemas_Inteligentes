@@ -89,7 +89,7 @@ def main():
 
     ## Ciclo de raciocínio do agente
     i = 0
-    while i != 50:
+    while i != 1000:
         i += 1
     
         agent.deliberate(pilha, agent)
@@ -100,27 +100,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-'''
-def OnlineDFSAgent(estadoAtual):
-    if localVitima == estadoAtual:
-        return stop
-    if estadoAtual not in naoTestados:
-        #naoTestados = naoTestados - estadoAtual #retira o estado da lista de acoes possiveis
-        #acaoAn = naoTestados # acao recebe a acao da fila
-        naoTestados[estadoAtual] = acoes[estadoAtual]
-    if estadoAnterior != NULL and resultados[estadoAnterior][acao] == NULL:
-        resultados[estadoAnterior][acaoAn] = estadoAtual
-        camNaoTestados[estadoAtual] = estadoAnterior #fazer uma fila
-    if naoTestados[estadoAtual] is NULL:
-        if camNaoTestados[estadoAtual] is NULL:
-            return stop
-        else:
-            acaoB = pop(camNaoTestados[estadoAtual])
-            acaoAn = acaoB
-            resultados[estadoAtual][acaoB] = acaoB
-    else:
-        acaoAn = pop(naoTestados[estadoAtual])
-    estadoAnterior = estadoAtual
-    return acaoAn
-'''
